@@ -1,15 +1,14 @@
 <?php
     require_once('Connection.php');
 
-    function fnAddUsuario($login, $nome, $email, $senha){
+    function fnAddUsuario($login, $nome, $email){
         $con = getConnection();
-        $sql = "Insert into usuario(login, nome, email, senha) values (:pLogin, :pNome, :pEmail, :pSenha)";
+        $sql = "Insert into usuario(login, nome, email) values (:pLogin, :pNome, :pEmail)";
 
         $stmt = $con->prepare($sql);
         $stmt -> bindParam(":pLogin", $login);
         $stmt -> bindParam(":pNome", $nome);
         $stmt -> bindParam(":pEmail", $email);
-        $stmt -> bindParam(":pSenha", $senha);
 
         return $stmt->execute();
     }
@@ -42,16 +41,30 @@
         return null;
     }
 
-    function fnUpdateUsuario($id, $login, $nome, $email, $senha){
+    function fnLocalizaUsuarioPorNome($nome){
         $con = getConnection();
-        $sql = "update usuario set login = :pLogin, nome = :pNome, email = :pEmail, senha = :pSenha where id = :pID";
+
+        $sql = "select * from usuario where nome like :pNome limit 20";
+
+        $stmt = $con->prepare($sql);
+
+        $stmt-> bindValue(":pNome", "%{$nome}%");
+
+        if($stmt->execute()){
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            return $stmt->fetchAll();
+        }
+    }
+
+    function fnUpdateUsuario($id, $login, $nome, $email){
+        $con = getConnection();
+        $sql = "update usuario set login = :pLogin, nome = :pNome, email = :pEmail where id = :pID";
 
         $stmt = $con->prepare($sql);
         $stmt -> bindParam(":pID", $id);
         $stmt -> bindParam(":pLogin", $login);
         $stmt -> bindParam(":pNome", $nome);
         $stmt -> bindParam(":pEmail", $email);
-        $stmt -> bindParam(":pSenha", $senha);
 
         return $stmt->execute();
     }
@@ -64,5 +77,19 @@
         $stmt -> bindParam(":pID", $id);
 
         return $stmt->execute();
+    }
+
+    function fnLogin($login, $email){
+        $con = getConnection();
+        $sql = "select id, email, creat_at as createdAt from usuario where login = :pLogin and email = :pEmail";
+
+        $stmt = $con->prepare($sql);
+        $stmt -> bindParam(":pLogin", $login);
+        $stmt -> bindParam(":pEmail", $email);
+
+       if($stmt->execute()){
+        return $stmt->fetch(PDO::FETCH_OBJ);
+       }
+       return null;
     }
 ?>
