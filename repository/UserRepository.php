@@ -30,7 +30,9 @@
 
     function fnLocalizaUsuarioPorID($id){
         $con = getConnection();
+
         $sql = "select * from usuario where id = :pID";
+        
         $stmt = $con->prepare($sql);
         $stmt -> bindParam(":pID", $id);
 

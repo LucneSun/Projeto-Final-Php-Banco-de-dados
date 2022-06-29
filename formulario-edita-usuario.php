@@ -1,18 +1,12 @@
 <?php
-  include('config.php');
-  require_once('repository/UserRepository.php');
+    include('config.php');
+    require_once('repository/UserRepository.php'); 
 
-  if(isset($_SESSION['id'])){
-    $id = $_SESSION['id'];
-  }
-  else{
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-  }
- 
-  $usuario = fnLocalizaUsuarioPorID($id);
+    $id = $_SESSION["id"];
+    $usuario = fnLocalizaUsuarioPorId($id);
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="pt_BR">
 
