@@ -1,0 +1,43 @@
+.search-menu{
+    display: flexbox;
+    color: white;
+    width: 60%;
+    margin: auto;
+    font-family: consolas;
+}
+
+.search-menu form section{
+    display: inline-flexbox;
+}
+
+.search-bar{
+    width: 80%;
+    height: 4vh;
+    font-family: consolas;
+    letter-spacing: 5px;
+    font-size: 2vh;
+}
+
+.search-btn{
+    font-family: consolas;
+    letter-spacing: 4px;
+    width: 17%;
+    height: 5vh;
+    font-size: 100%;
+}
+
+.filters{
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.filters label{
+    margin-left: 20px;
+    font-family: consolas;
+    letter-spacing: 2px;
+}
+
+.filters label input{
+    margin-left:5px;
+}
+

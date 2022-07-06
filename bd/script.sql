@@ -1,5 +1,6 @@
-create database if not exists mmo;
-use mmo;
-
-create or replace table usuario(id int primary key auto_increment, login varchar(30) not null unique, nome varchar(250) not null, email varchar(250) not null unique, creat_at TIMESTAMP not null default CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-insert into usuario(login, nome, email) values ('admin123', 'administrador', 'admin@senac.com.br');
+create database if not exists playlist_share;
+use playlist_share;
+create or replace table users(id int primary key auto_increment, my_name varchar(240) not null, age int not null, photo_link longtext, email varchar(250) not null unique, my_password  varchar(255) not null, created_at TIMESTAMP not null default CURRENT_TIME) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+insert into users (my_name, age, photo_link, email, my_password) values ("admin", 20, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQuK69ktD3fOvpzBI9UwzjmbaWq6r0enmbojzvgP-5kbt6783RjNwFUROaSq9jHdJXqA&usqp=CAU", "admin@gmail.com", md5("admin123"));
+create or replace table music(music_id int primary key auto_increment, link varchar(300), type varchar(3), my_playlist_id int not null,created_at TIMESTAMP not null default CURRENT_TIME, CONSTRAINT FK_PlaylistID FOREIGN KEY (my_playlist_id) REFERENCES playlist(playlist_id) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+create or replace table playlist(playlist_id int primary key auto_increment, playlist_name varchar(100) not null, image_link longtext, playlist_description varchar(280) not null, created_by int not null, created_at TIMESTAMP not null default CURRENT_TIME, CONSTRAINT FK_UserID FOREIGN KEY (created_by) REFERENCES users(id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;

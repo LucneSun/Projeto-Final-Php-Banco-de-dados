@@ -1,0 +1,50 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-image: url("https://i.pinimg.com/originals/6d/25/35/6d25358407e9e9dca9e33d5324673dad.gif");
+    background-size:cover;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+.mainnav nav{
+    font-size: 2.8vh;
+    font-family: "consolas";
+    display: flex;
+    align-items: center;
+    background-image: url("https://i.pinimg.com/originals/b6/fe/0c/b6fe0c5fd3c211e729aabeca0597fa0e.gif");
+    color: whitesmoke;
+    height: 9vh;
+    border: rgba(0, 0, 0, 0.658) 4px solid;
+    width: 100%;
+    margin: auto;
+}
+
+.mainnav nav ul{
+    display: flex;
+    list-style: none;
+    letter-spacing: 3px;
+    margin: 0 auto;
+}
+
+.mainnav nav ul a img{
+    width:9vh;
+    display: flexbox;
+    border-radius: 50%;
+}
+
+.mainnav nav ul a{
+    align-items: center;
+    display: flex;
+    list-style: none;
+    letter-spacing: 5px;
+    padding: 0 32px;
+    font-weight: bold;
+}
+
+.mainnav nav ul a :hover{
+    color: blue;
+}

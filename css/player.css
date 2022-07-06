@@ -1,0 +1,22 @@
+.music-player{
+    font-family: 'consolas';
+    color: white;
+    letter-spacing: 1vh;
+    text-align: center;
+    display: flexbox;
+    width: 50%;
+    margin: 50px auto;
+}
+
+.music-player iframe{
+    display: flexbox;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.music-player img{
+    margin: auto;
+    margin-top: 20px;
+    width: 70%;
+}

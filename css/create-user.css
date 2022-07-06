@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: consolas;
+    letter-spacing: 4px;
+    font-size: 4vh;
+}
+
+body{
+    background-color: black;
+}
+
+.create-user{
+    margin: auto;
+    width: 50%;
+}
+
+.create-user form{
+    width: 50%;
+    margin: 30px auto;
+    border: white 4px solid;
+}
+
+.create-user input{
+    margin-left: 15px;
+}
+
+.create-user label{
+    color: white;
+    margin-left: 15px;
+}

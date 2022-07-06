@@ -1,0 +1,31 @@
+.create-form{
+    background-color: black;
+    border: 4px white solid;
+    display: flex;
+    color: white;
+    font-family: consolas;
+    font-size: 4vh;
+    width: 500px;
+    margin: auto;
+}
+
+.previewImg{
+    width: 200px;
+    margin: 3px;
+    margin-left: 120px;
+    border: 2px white solid;
+}
+
+.create-form form{
+    width: 100%;
+    padding: 10px;
+}
+
+.create-form input{
+    width: 50%;
+    font-family: consolas;
+    font-size: 4vh;
+}
+.create-form label{
+    width: 50%;
+}

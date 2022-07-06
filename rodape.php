@@ -2,12 +2,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     var timer = null;
-    $('#searchName').bind('keyup', function(){
+    $('#searchID').bind('keyup', function(){
         clearTimeout(timer)
         timer = setTimeout(submitForm, 1000)
     });
 
     function submitForm() {
-        $('#formSearchName').submit();
+        $('#searchFormID').submit();
     }
 </script>

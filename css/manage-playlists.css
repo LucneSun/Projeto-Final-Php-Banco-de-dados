@@ -1,0 +1,48 @@
+.message{
+    margin-top: 4vh;
+    width: 100%;
+    color: white;
+    font-family: consolas;
+    font-size: 6vh;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+.create-btn{
+    width: 100%;
+}
+
+.create-btn button{
+    display: flex;
+    margin: auto;
+    font-size: 4vh;
+    font-family: consolas;
+}
+
+.list_of_playlist{
+    margin: 10% 0;
+    width: 100%;
+    display: flex;
+}
+
+.list_of_playlist table{
+    margin: auto;
+    padding: 10px;
+    font-size: 3vh;
+    font-family: consolas;
+    color: white;
+    letter-spacing: 4px;
+    text-align: center;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.651);
+    border: 4px solid white;
+}
+
+.btn a{
+    margin-left: 2vh;
+    color: white;
+}
+
+.btn a:hover{
+    color: blue;
+}
