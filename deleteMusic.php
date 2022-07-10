@@ -1,10 +1,10 @@
 <?php
-    require_once("repository/PlaylistRepository.php");
+    require_once("repository/MusicRepository.php");
     session_start();
 
     $msg = 'Falha ao apagar';
     $page = 'manage_playlists.php';
-    if(fnDeletePlaylist($_SESSION['id'])){
+    if(fnDeleteMusic($_SESSION['id'])){
         $msg = "Sucesso ao apagar";
     }
 

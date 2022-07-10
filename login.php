@@ -8,7 +8,7 @@
     $page = "search.php";
     if(!$_SESSION['login'] = fnLogin($my_name, $my_password)){
        $page= "errorPage.php";
-       $expire = (time() + 20);
+       $expire = (time() + 1);
        setcookie('notify', 'Falha no login', $expire);
     }
 

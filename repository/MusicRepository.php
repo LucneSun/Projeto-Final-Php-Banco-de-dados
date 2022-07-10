@@ -1,26 +1,28 @@
 <?php
     require_once('Connection.php');
 
-    function fnAddPlaylist($playlist_name, $image_link, $playlist_description, $created_by){
+    function fnAddMusic($link, $type, $my_playlist_id){
         $con = getConnection();
 
-        $sql = "insert into playlist (playlist_name, image_link, playlist_description, created_by) values (:pPlaylistName, :pImageLink, :pPlaylistDescription, :pCreatedBy)";
+        $sql = "insert into music (link, type, my_playlist_id) values (:pLink, :pType, :pMyPlaylistId)";
         $stmt = $con->prepare($sql);
-        $stmt->bindParam(":pPlaylistName", $playlist_name);
-        $stmt->bindParam(":pImageLink", $image_link);
-        $stmt->bindParam(":pPlaylistDescription", $playlist_description);
-        $stmt->bindParam(":pCreatedBy", $created_by);
+        $stmt->bindParam(":pLink", $link);
+        $stmt->bindParam(":pType", $type);
+        $stmt->bindParam(":pMyPlaylistId", $my_playlist_id);
 
         return $stmt->execute();
     }
 
-    function fnListPlaylistByName($name){
+    function fnListMusicByType($link, $my_playlist_id, $type){
         $con = getConnection();
 
-        $sql = "select * from playlist where playlist_name like :pPlaylistName";
+        $sql ="select * from music where link like :pLink and my_playlist_id = :pMyPlaylistId and type = :pType";
 
         $stmt = $con->prepare($sql);
-        $stmt->bindValue(":pPlaylistName", "%{$name}%");
+
+        $stmt->bindValue(":pLink", "%{$link}%");
+        $stmt->bindParam(":pMyPlaylistId", $my_playlist_id);
+        $stmt->bindParam(":pType", $type);
         
         if($stmt->execute()){
             $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -28,27 +30,29 @@
         }
     }
 
-    
-    function fnListPlaylist(){
+    function fnListMusicByLink($link, $my_playlist_id){
         $con = getConnection();
 
-        $sql = "select * from playlist";
-        
-        $result = $con->query($sql);
-        $lstPlaylists = array();
-        while($playlist = $result->fetch(PDO::FETCH_OBJ)){
-            array_push($lstPlaylists, $playlist);
-        }
+        $sql ="select * from music where link like :pLink and my_playlist_id = :pMyPlaylistId";
 
-        return $lstPlaylists;
+        $stmt = $con->prepare($sql);
+
+        $stmt->bindValue(":pLink", "%{$link}%");
+        $stmt->bindParam(":pMyPlaylistId", $my_playlist_id);
+
+        if($stmt->execute()){
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            return $stmt->fetchAll();
+        }
     }
 
-    function fnLocatePlaylistByID($playlist_id){
+
+    function fnLocateMusicByID($music_id){
         $con = getConnection();
-        $sql = "select * from playlist where playlist_id = :pID";
+        $sql = "select * from music where music_id = :pMusicId";
 
         $stmt = $con->prepare($sql); 
-        $stmt->bindParam(":pID", $playlist_id);
+        $stmt->bindParam(":pMusicId", $music_id);
 
         if($stmt->execute()){
             return $stmt->fetch(PDO::FETCH_OBJ);
@@ -56,28 +60,27 @@
         return null;
     }
 
-    function fnUpdatePlaylist($playlist_id, $playlist_name, $image_link, $playlist_description){
+    function fnUpdateMusic($link, $type, $music_id){
         $con = getConnection();
 
-        $sql = "update playlist set playlist_name = :pPlaylistName, image_link = :pImageLink, playlist_description = :pPlaylistDescription where playlist_id = :pPlaylistID";
+        $sql = "update music set link = :pLink, type = :pType where music_id = :pMusicId";
 
         $stmt = $con->prepare($sql);
 
-        $stmt->bindParam(":pPlaylistID", $playlist_id);
-        $stmt->bindParam(":pPlaylistName", $playlist_name);
-        $stmt->bindParam(":pImageLink", $image_link);
-        $stmt->bindParam(":pPlaylistDescription", $playlist_description);
+        $stmt->bindParam(":pMusicId", $music_id);
+        $stmt->bindParam(":pLink", $link);
+        $stmt->bindParam(":pType", $type);
 
         return $stmt->execute();
     }
 
-    function fnDeletePlaylist($playlist_id){
+    function fnDeleteMusic($music_id){
         $con = getConnection();
 
-        $sql = "delete from playlist where playlist_id = :pID";
+        $sql = "delete from music where music_id = :pMusicId";
 
         $stmt = $con->prepare($sql);      
-        $stmt->bindParam(":pID", $playlist_id);
+        $stmt->bindParam(":pMusicId", $music_id);
 
         return $stmt->execute();
     }

@@ -16,6 +16,16 @@
     border: 2px white solid;
 }
 
+.message{
+    margin-top: vh;
+    width: 100%;
+    color: white;
+    font-family: consolas;
+    font-size: 3vh;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
 .create-form form{
     width: 100%;
     padding: 10px;

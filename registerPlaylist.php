@@ -20,7 +20,7 @@
         }
     }
 
-    setcookie('notify', $msg, time() + 10);
+    setcookie('notify', $msg, time() + 1);
     header("location: create_playlist.php");
     exit;
 ?>

@@ -1,0 +1,16 @@
+{
+    "name": "lucas/playlist_share",
+    "description": "playlist site that enables you to create your user and playlists using links.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luk2Sun",
+            "email": "joaolucasarasolaire@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpmailer/phpmailer": "dev-master"
+    }
+}

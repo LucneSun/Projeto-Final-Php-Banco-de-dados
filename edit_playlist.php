@@ -21,10 +21,9 @@
         <header class="mainnav">
             <nav>
                 <ul>
-                    <a><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQuK69ktD3fOvpzBI9UwzjmbaWq6r0enmbojzvgP-5kbt6783RjNwFUROaSq9jHdJXqA&usqp=CAU" alt="profile picture"/></a>
+                    <a href='config_page.php'><img src="<?= $_SESSION['login']->photo_link?>" alt="profile picture"/></a>
                     <a style='text-decoration: none; color: white;' href='search.php'><li>Pesquisar</li></a>
                     <a style='text-decoration: none; color: white;' href='manage_playlists.php'><li>Gerenciar Playlists</li></a>
-                    <a><li>Configurações</li></a>
                     <a href="logout.php" style='text-decoration: none; color: white;' ><li>Sair</li></a>
                 </ul>
             </nav>
@@ -39,12 +38,12 @@
                     <label>Alterar Nome: <input name="playlistName" type="text" maxlength="240" style="margin-left: 23%;" value="<?= $playlist->playlist_name ?>" required></label>
                     <br>
                     <div>
-                    <img class="previewImg" src="<?= $playlist->image_link ?>" id="avatarId" class="rounded" alt="foto do usuário">
+                    <img name="previewImg" class="previewImg" src="<?= $playlist->image_link ?>" id="avatarId" class="rounded" alt="foto do usuário">
                     </div>
                     <!--onchange="loadFile(event)" -->
                     <label for="imgBase64">Imagem: </label>
-                    <input id='imgBase64' name="file" type="file" required>
-                    <br>
+                    <input id='imgBase64' name="file" type="file">
+                    <br> 
                     <label>Alterar Descrição: <input name="playlistDescription" type="text" maxlength="240" style="margin-left: 23%;" value="<?= $playlist->playlist_description ?>" required></label>
                     <br>
                     <input type="submit" value="Editar" style="margin: 6% 0 2% 24%;">     

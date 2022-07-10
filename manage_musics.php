@@ -1,7 +1,11 @@
 <?php 
     include('config.php');
     require_once("repository/MusicRepository.php");
-    $my_playlist_id = filter_input(INPUT_GET, 'myPlaylistID', FILTER_SANITIZE_NUMBER_INT);
+    require_once('repository/PlaylistRepository.php');
+
+    $notify = filter_input(INPUT_GET, 'notify', FILTER_SANITIZE_SPECIAL_CHARS);
+    if(!$playlist = fnLocatePlaylistByID($_SESSION['id']))
+    header("location: manage_playlists.php");
 ?>
 
 <!DOCTYPE html>
@@ -21,29 +25,26 @@
         <header class="mainnav">
             <nav>
                 <ul>
-                    <a><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQuK69ktD3fOvpzBI9UwzjmbaWq6r0enmbojzvgP-5kbt6783RjNwFUROaSq9jHdJXqA&usqp=CAU" alt="profile picture"/></a>
+                    <a href='config_page.php'><img src="<?= $_SESSION['login']->photo_link?>" alt="profile picture"/></a>
                     <a style='text-decoration: none; color: white;' href='search.php'><li>Pesquisar</li></a>
-                    <a><li style="color: grey;">Gerenciar Playlists</li></a>
-                    <a><li>Configurações</li></a>
-                    <a><li>Sair</li></a>
+                    <a style='text-decoration: none; color: white;' href='manage_playlists.php'><li>Gerenciar Playlists</li></a>
+                    <a href="logout.php" style='text-decoration: none; color: white;' ><li>Sair</li></a>
                 </ul>
             </nav>
         </header>
-    
-        <br>
 
-        <?php if(!fnListMusic()) echo "<h1 class='message'> A playlist ainda não tem uma música</h1>"; else echo "<h1 class='message'> Músicas</h1>"?>
+        <?php $msg = "<h1 id='message' class='message'> Músicas</h1>";  $musics = 0; echo $msg;?>
         <div class="list_of_playlist">
             <table>
                 <tbody>
-                    <?php foreach(fnListMusic() as $music) :?>
+                    <?php foreach(fnListMusicByLink('', $playlist->playlist_id) as $music) :?>
                     <tr>
-                        <td style="padding-right: 10px;"><?= $music->playlist_id?></td>
-                        <td><?= $playlist->playlist_name?></td>
-                        <td><?= $playlist->created_at?></td>
-                        <td class="btn"><a href="edit_playlist.php?playlistID=<?= $playlist->playlist_id ?>">Editar</a></td>
-                        <td class="btn"><a href="">Músicas</a></td>
-                        <td class="btn"><a onclick="return confirm('Deseja realmente excluir?');" href="deletePlaylist.php?playlistID=<?= $playlist->playlist_id ?>">Excluir</a></td>
+                        <td style="padding-right: 10px;"><?= $music->music_id?></td>
+                        <td><?= $music->link?></td>
+                        <td><?= $music->type?></td>
+                        <td class="btn"><a href="#" onclick="manageMusic(<?= $music->music_id ?>, 'edit')">Editar</a></td>
+                        <td class="btn"><a onclick="return confirm('Deseja realmente excluir?') ? manageMusic(<?= $music->music_id ?>, ' ') : '';" href="#">Excluir</a></td>
+                        <?php $musics += 1;?>
                     </tr>
                     <?php endforeach;?>
                 </tbody>
@@ -58,6 +59,38 @@
             <a style="text-decoration: none;" href='create_music.php'><button>Criar Música</button></a>
         </div>
 
-    </body>
+        <script>
+            var message = document.getElementById('message');
+            if(!<?= $musics?> > 0)
+            message.textContent = 'Essa playlist ainda não tem músicas';
 
+
+            window.post = (data) => {
+
+                return fetch(
+                    'set_session.php',
+                     {
+                        method: 'POST',
+                         headers: {'Content-Type': 'application/json'},
+                          body: JSON.stringify(data)
+                        }
+                    )
+                    .then(response => {
+                        console.log(`${response}`);
+                });
+
+            }
+
+            function manageMusic(music_id, action){
+
+                post({data : music_id});
+
+                url = 'deleteMusic.php';
+                if(action === 'edit')
+                    url = 'edit_music.php';
+                
+                window.location.href = url;
+            }
+        </script>
+    </body>
 </html>

@@ -21,20 +21,19 @@
         <header class="mainnav">
             <nav>
                 <ul>
-                    <a><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQuK69ktD3fOvpzBI9UwzjmbaWq6r0enmbojzvgP-5kbt6783RjNwFUROaSq9jHdJXqA&usqp=CAU" alt="profile picture"/></a>
+                <a href='config_page.php'><img src="<?= $_SESSION['login']->photo_link?>" alt="profile picture"/></a>
                     <a style='text-decoration: none; color: white;' href='search.php'><li>Pesquisar</li></a>
                     <a><li style="color: grey;">Gerenciar Playlists</li></a>
-                    <a><li>Configurações</li></a>
                     <a href="logout.php" style='text-decoration: none; color: white;' ><li>Sair</li></a>
                 </ul>
             </nav>
         </header>
-
-        <?php if(!fnListPlaylist()) echo "<h1 class='message'> Você ainda não tem uma playlist</h1>"; else echo "<h1 class='message'> Minhas Playlists</h1>"?>
+        <br>
+        <?php $msg = "<h1 id='message' class='message'> Minhas Playlists</h1>";  $playlists = 0; echo $msg;?>
         <div class="list_of_playlist">
             <table>
                 <tbody>
-                    <?php foreach(fnListPlaylistByName('', $_SESSION['login']->id, 1) as $playlist) :?>
+                    <?php foreach(fnListPlaylistByName('', $_SESSION['login']->id, 1, 'ASC') as $playlist) :?>
                     <tr>
                         <td style="padding-right: 10px;"><?= $playlist->playlist_id?></td>
                         <td><?= $playlist->playlist_name?></td>
@@ -42,12 +41,12 @@
                         <td class="btn"><a href="#" onclick="gerirPlaylist(<?= $playlist->playlist_id ?>, 'edit')">Editar</a></td>
                         <td class="btn"><a href="#" onclick="gerirPlaylist(<?= $playlist->playlist_id ?>, 'musics')">Músicas</a></td>
                         <td class="btn"><a onclick="return confirm('Deseja realmente excluir?') ? gerirPlaylist(<?= $playlist->playlist_id ?>, ' ') : '';" href="#">Excluir</a></td>
+                        <?php $playlists += 1;?>
                     </tr>
                     <?php endforeach;?>
                 </tbody>
             </table>
         </div>
-
         <br>
         <hr>
         <br>
@@ -57,6 +56,12 @@
         </div>
 
         <script>
+
+            var message = document.getElementById('message');
+            if(!<?= $playlists?> > 0)
+            message.textContent = 'Você ainda não criou nenhuma Playlist';
+
+
             window.post = (data) => {
 
                 return fetch(

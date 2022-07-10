@@ -14,13 +14,20 @@
         return $stmt->execute();
     }
 
-    function fnListPlaylistByName($name, $created_by, $mine){
+    function fnListPlaylistByName($name, $created_by, $mine, $old_new){
         $con = getConnection();
 
-        $sql = "select * from playlist where playlist_name like :pPlaylistName";
+        $sql = "select * from playlist where playlist_name like :pPlaylistName order by timestamp(created_at) desc";
+
+        if($old_new == 'ASC')
+            $sql = "select * from playlist where playlist_name like :pPlaylistName order by timestamp(created_at)";
 
         if($mine == 1)
-            $sql = "select * from playlist where playlist_name like :pPlaylistName and created_by = :pCreatedBy";
+        {
+           $sql = "select * from playlist where playlist_name like :pPlaylistName and created_by = :pCreatedBy order by timestamp(created_at) desc";
+            if($old_new == 'ASC')
+                $sql = "select * from playlist where playlist_name like :pPlaylistName and created_by = :pCreatedBy order by timestamp(created_at)";
+        }
 
         $stmt = $con->prepare($sql);
         $stmt->bindValue(":pPlaylistName", "%{$name}%");
@@ -36,17 +43,17 @@
 
     
     function fnListPlaylist(){
-        $con = getConnection();
+        $con = getConnection($playlist_id);
 
-        $sql = "select * from playlist";
+        $sql = "select * from playlist where playlist_id = :pPlaylistId";
         
-        $result = $con->query($sql);
-        $lstPlaylists = array();
-        while($playlist = $result->fetch(PDO::FETCH_OBJ)){
-            array_push($lstPlaylists, $playlist);
+        $stmt = $con->prepare($sql);
+        $stmt->bindValue(":pPlaylistId", $playlist_id);
+        
+        if($stmt->execute()){
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            return $stmt->fetchAll();
         }
-
-        return $lstPlaylists;
     }
 
     function fnLocatePlaylistByID($playlist_id){
@@ -79,8 +86,7 @@
 
     function fnDeletePlaylist($playlist_id){
         $con = getConnection();
-
-        $sql = "delete from playlist where playlist_id = :pID";
+        $sql = "delete from music where my_playlist_id = :pID; delete from playlist where playlist_id = :pID";
 
         $stmt = $con->prepare($sql);      
         $stmt->bindParam(":pID", $playlist_id);

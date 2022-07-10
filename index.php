@@ -18,9 +18,16 @@
                 <br>
                 <input class="login-btn" type="submit" value="Entrar"/>
                 <br>
-                <label class="create-label">Não tem conta? <a href="create-user.html"><input class="create-btn" type="button" value="Criar Conta"/></a></label>
+                <a style="margin-left: 25px" href="recover_password.php"><input type="button" value="Recuperar Senha"/></a>
+                <br>
+                <label class="create-label">Não tem conta? <a href="create_user.php"><input class="create-btn" type="button" value="Criar Conta"/></a></label>
             </form>
         </div>
     </body>
-
+    <div style="display: flex;
+    color: white;
+    font-family: consolas;
+    font-size: 4vh;
+    width: 500px;
+    margin: auto;" id="notify"><h1><?= isset($_COOKIE['notify']) ? $_COOKIE['notify'] : '' ?></h1></div>
 </html>

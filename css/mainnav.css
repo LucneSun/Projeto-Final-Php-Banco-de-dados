@@ -48,3 +48,7 @@ body{
 .mainnav nav ul a :hover{
     color: blue;
 }
+
+.mainnav nav ul a img:hover{
+    border: 1px solid blue;
+}

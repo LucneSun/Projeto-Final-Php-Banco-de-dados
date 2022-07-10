@@ -1,69 +1,43 @@
 <?php
     require_once('Connection.php');
 
-    function fnAddPlaylist($playlist_name, $image_link, $playlist_description, $created_by){
+    function fnAddUser($my_name, $age, $email, $my_password, $photo_link){
         $con = getConnection();
 
-        $sql = "insert into playlist (playlist_name, image_link, playlist_description, created_by) values (:pPlaylistName, :pImageLink, :pPlaylistDescription, :pCreatedBy)";
+        $sql = "insert into users (my_name, age, photo_link, email, my_password) values (:pMyName, :pAge, :pPhotoLink, :pEmail, :pMyPassword)";
         $stmt = $con->prepare($sql);
-        $stmt->bindParam(":pPlaylistName", $playlist_name);
-        $stmt->bindParam(":pImageLink", $image_link);
-        $stmt->bindParam(":pPlaylistDescription", $playlist_description);
-        $stmt->bindParam(":pCreatedBy", $created_by);
+        $stmt->bindParam(":pMyName", $my_name);
+        $stmt->bindParam(":pAge", $age);
+        $stmt->bindParam(":pPhotoLink", $photo_link);
+        $stmt->bindParam(":pEmail", $email);
+        $stmt->bindValue(":pMyPassword", md5($my_password));
 
         return $stmt->execute();
     }
 
-    function fnListPlaylist(){
+    function fnUpdateUser($id, $my_name, $age, $my_password, $photo_link){
         $con = getConnection();
 
-        $sql = "select * from playlist";
-        
-        $result = $con->query($sql);
-        $lstPlaylists = array();
-        while($playlist = $result->fetch(PDO::FETCH_OBJ)){
-            array_push($lstPlaylists, $playlist);
-        }
-
-        return $lstPlaylists;
-    }
-
-    function fnLocatePlaylistByID($playlist_id){
-        $con = getConnection();
-        $sql = "select * from playlist where playlist_id = :pID";
-
-        $stmt = $con->prepare($sql); 
-        $stmt->bindParam(":pID", $playlist_id);
-
-        if($stmt->execute()){
-            return $stmt->fetch(PDO::FETCH_OBJ);
-        }
-        return null;
-    }
-
-    function fnUpdatePlaylist($playlist_id, $playlist_name, $image_link, $playlist_description, $created_by){
-        $con = getConnection();
-
-        $sql = "update playlist set playlist_name = :pPlaylistName, image_link = :pImageLink, playlist_description = p:PlaylistDescription, created_by = :pCreatedBy where playlist_id = :pPlaylistID";
+        $sql = "update users set my_name = :pMyName, age = :pAge, my_password = :pMyPassword, photo_link = :pPhotoLink where id = :pId;";
 
         $stmt = $con->prepare($sql);
 
-        $stmt->bindParam(":pPlaylistID", $playlist_id);
-        $stmt->bindParam(":pPlaylistName", $playlist_name);
-        $stmt->bindParam(":pImageLink", $image_link);
-        $stmt->bindParam(":pPlaylistDescription", $playlist_description);
-        $stmt->bindParam(":pCreatedBy", $created_by);
+        $stmt->bindParam(":pId", $id);
+        $stmt->bindParam(":pMyName", $my_name);
+        $stmt->bindParam(":pAge", $age);
+        $stmt->bindValue(":pMyPassword", md5($my_password));
+        $stmt->bindParam(":pPhotoLink", $photo_link);
 
         return $stmt->execute();
     }
 
-    function fnDeletePlaylist($playlist_id){
+    function fnDeleteUser($id){
         $con = getConnection();
 
-        $sql = "delete from playlist where playlist_id = :pID";
+        $sql = "delete from users where id = :pId";
 
         $stmt = $con->prepare($sql);      
-        $stmt->bindParam(":pID", $playlist_id);
+        $stmt->bindParam(":pId", $id);
 
         return $stmt->execute();
     }
@@ -80,5 +54,34 @@
         if($stmt->execute())
         return $stmt->fetch(PDO::FETCH_OBJ);
 
+        return null;
+    }
+
+    function fnUpdatePassword($email, $new_password){
+        $con = getConnection();
+
+        $sql = "update users set my_password = :pMyPassword where email = :pEmail";
+
+        $stmt = $con->prepare($sql);
+
+        $stmt->bindParam(":pEmail", $email);
+        $stmt->bindValue(":pMyPassword", md5($new_password));
+
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+
+    function fnLocateUserByID($id){
+        $con = getConnection();
+        $sql = "select * from users where id = :pID";
+
+        $stmt = $con->prepare($sql); 
+        $stmt->bindParam(":pID", $id);
+
+        if($stmt->execute()){
+            return $stmt->fetch(PDO::FETCH_OBJ);
+        }
         return null;
     }

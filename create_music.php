@@ -1,11 +1,10 @@
-<?php
-    include('config.php');?>
+<?php include('config.php');?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
 
     <head>
-        <title>Criar Playlist</title>
+        <title>Criar Música</title>
         <meta charset= "UTF-8"/>
         <meta name= "viewport" content= "width= device-width, initial-scale= 1.0"/>
         <link rel="stylesheet" type="text/css" href="css/mainnav.css"/>
@@ -25,26 +24,23 @@
                 </ul>
             </nav>
         </header>
+        <br>
+
+        
+        <h2 class="message">(Links do youtube precisam ser www.youtube.com/(embed), para pegar o link selecione compartilhar e incorporar)</h2>
+        <br>
+        <h2 class="message">(Links do soundcloud são apenas os números em parênteses api.soundcloud.com/tracks/(308950076), para pegar selecione compartilhar incorporar e procure por essa linha)</h2>
+
     
         <br>
-        
+
         <div class="create-form" style="margin-top: 5%;">
-           <form action="registerPlaylist.php" method="post" enctype="multipart/form-data">
+           <form action="registerMusic.php" method="post">
                 <section>
-                    <label>Nome: <input name="playlistName" type="text" maxlength="100" style="margin-left: 6%;" required></label>
+                    <label>Link: <input name="link" type="text" maxlength="400" style="margin-left: 6%;" required></label>
                     <br>
-                    <div>
-                    <svg width="100%" height="180" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Foto</text>
-                    </svg>
-                    </div>
-                    <!--onchange="loadFile(event)" -->
-                    <label for="imgBase64">Imagem: </label>
-                    <input id='imgBase64' name='file' type="file" required>
-                    <br>
-                    <label>Descrição: <input name="playlistDescription" type="text" maxlength="280" style="margin-left: 1%;" required></label>
-                    <br>
+                    <label>Youtube: <input name="youtube/soundcloud" value="you" type="radio" checked></label>
+                    <label>SoundCloud: <input name="youtube/soundcloud" value="soun" type="radio" ></label>
                     <input type="submit" value="Criar" style="margin: 6% 0 2% 24%;">     
                 </section>
            </form>
@@ -55,8 +51,6 @@
     font-size: 4vh;
     width: 500px;
     margin: auto;" id="notify"><h1><?= isset($_COOKIE['notify']) ? $_COOKIE['notify'] : '' ?></h1></div>
-    <?php include("rodape.php") ?>
-    <script src="js/base64.js"></script>
     </body>
 
 </html>
