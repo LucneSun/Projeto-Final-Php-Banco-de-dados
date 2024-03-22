@@ -7,7 +7,7 @@ This project was a final project from programming lessons of a Senac course.
 
 The objective was to make a simple API in php using the knowledge of all the lessons about web programming with PHP, Javascript, Html and CSS.
 
-The subject i choose was a simple social network where you can upload photos texts and make a playlist with youtube or soundcloud links. Where users can express their feelings towards with poems or texts while linking their favourite songs. Or just store them in a easy way.
+The subject i choose was a simple social network where you can upload photos texts and make a playlist with youtube or soundcloud links. Where users can express their feelings with poems or texts while linking their favourite songs. Or just store them in a easy way.
 
 <img src="gif1.gif" alt="Gif showing the site usage and appearence">
 
